@@ -3,7 +3,7 @@ import { S3FileStorageService } from './s3-file-storage.service';
 import { S3 } from 'aws-sdk';
 
 const mockS3FileStorageConfig = {
-  s3ServiceBucket: 'mock-bucket',
+  bucket: 'mock-bucket',
 };
 
 const mockS3Upload = jest.fn().mockReturnValue({
@@ -58,7 +58,7 @@ describe('S3FileStorageService', () => {
       await s3FileStorageService.store(fileBuffer, filePath);
 
       expect(mockS3Upload).toHaveBeenCalledWith({
-        Bucket: mockS3FileStorageConfig.s3ServiceBucket,
+        Bucket: mockS3FileStorageConfig.bucket,
         Body: fileBuffer,
         Key: filePath,
         ACL: 'public-read',
@@ -85,7 +85,7 @@ describe('S3FileStorageService', () => {
       await s3FileStorageService.delete(filePath);
 
       expect(mockS3DeleteObject).toHaveBeenCalledWith({
-        Bucket: mockS3FileStorageConfig.s3ServiceBucket,
+        Bucket: mockS3FileStorageConfig.bucket,
         Key: filePath,
       });
     });

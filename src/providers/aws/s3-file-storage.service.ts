@@ -17,7 +17,7 @@ export class S3FileStorageService extends FileStorageService{
     async store(file: Buffer, path: string) {
       const uploadResult = await this.s3
         .upload({
-          Bucket: this.s3FileStorageConfig.s3ServiceBucket,
+          Bucket: this.s3FileStorageConfig.bucket,
           Body: file,
           Key: `${path}`,
           ACL: 'public-read',
@@ -31,7 +31,7 @@ export class S3FileStorageService extends FileStorageService{
     async delete(path: string) {
       const deletedFile = await this.s3
         .deleteObject({
-          Bucket: this.s3FileStorageConfig.s3ServiceBucket,
+          Bucket: this.s3FileStorageConfig.bucket,
           Key: path,
         })
         .promise();
