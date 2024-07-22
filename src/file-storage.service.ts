@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FileStorageType } from './enum/file-storage-type.enum';
 
 @Injectable()
 export abstract class FileStorageService {
