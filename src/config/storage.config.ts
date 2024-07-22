@@ -1,10 +1,9 @@
 export const storageConfig = () => ({
-    storageService: process.env.STORAGE_SERVICE,
-    aws: {
-      s3ServiceAccessKey: process.env.S3_SERVICE_ACCESS_KEY,
-      s3ServiceSecretKey: process.env.S3_SERVICE_SECRET_KEY,
-      s3ServiceRegion: process.env.S3_SERVICE_REGION,
-      s3ServiceAwsBucket: process.env.S3_SERVICE_AWS_BUCKET,
-    },
-  });
-  
+  storageService: process.env.STORAGE_SERVICE,
+  aws: {
+    accessKeyId: process.env.S3_SERVICE_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SERVICE_SECRET_KEY,
+    region: process.env.S3_SERVICE_REGION,
+    bucket: process.env.S3_SERVICE_AWS_BUCKET,
+  },
+});

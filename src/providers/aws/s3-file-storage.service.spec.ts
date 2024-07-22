@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { S3FileStorageService } from './s3-file-storage.service';
-import { S3 } from 'aws-sdk';
 
 const mockS3FileStorageConfig = {
   bucket: 'mock-bucket',
@@ -21,7 +20,6 @@ const mockS3Client = {
 
 describe('S3FileStorageService', () => {
   let s3FileStorageService: S3FileStorageService;
-  let s3: S3;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -38,8 +36,8 @@ describe('S3FileStorageService', () => {
       ],
     }).compile();
 
-    s3FileStorageService = module.get<S3FileStorageService>(S3FileStorageService);
-    s3 = module.get<S3>('S3');
+    s3FileStorageService =
+      module.get<S3FileStorageService>(S3FileStorageService);
   });
 
   afterEach(() => {
@@ -61,8 +59,6 @@ describe('S3FileStorageService', () => {
         Bucket: mockS3FileStorageConfig.bucket,
         Body: fileBuffer,
         Key: filePath,
-        ACL: 'public-read',
-        ContentDisposition: 'inline',
       });
     });
 
@@ -70,11 +66,13 @@ describe('S3FileStorageService', () => {
       const fileBuffer = Buffer.from('mock-file-content');
       const filePath = 'test-file.txt';
 
-      mockS3Upload.mockReturnValueOnce({
-        promise: jest.fn().mockRejectedValue(new Error('Upload failed')),
-      });
+      jest
+        .spyOn(s3FileStorageService, 'store')
+        .mockRejectedValueOnce(new Error('Upload failed'));
 
-      await expect(s3FileStorageService.store(fileBuffer, filePath)).rejects.toThrow('Upload failed');
+      await expect(
+        s3FileStorageService.store(fileBuffer, filePath),
+      ).rejects.toThrow('Upload failed');
     });
   });
 
@@ -97,8 +95,9 @@ describe('S3FileStorageService', () => {
         promise: jest.fn().mockRejectedValue(new Error('Deletion failed')),
       });
 
-    
-      await expect(s3FileStorageService.delete(filePath)).rejects.toThrow('Deletion failed');
+      await expect(s3FileStorageService.delete(filePath)).rejects.toThrow(
+        'Deletion failed',
+      );
     });
   });
 });

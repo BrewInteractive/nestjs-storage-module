@@ -1,1 +1,1 @@
-export * from "./s3-file-storage.config"
+export * from './s3-file-storage.config';

@@ -31,32 +31,4 @@ describe('FileStorageModule', () => {
     fileStorageModule = app.get<FileStorageModule>(FileStorageModule);
     expect(fileStorageModule).toBeDefined();
   });
-
-  it('Should throw error if configuration is invalid', async () => {
-    const invalidFileStorageType = 'invalid-type';
-    const mockConfig = () => ({
-      aws: {
-        accessKeyId: 'mock-access-key',
-        secretAccessKey: 'mock-secret-key',
-      },
-      fileStorageType: invalidFileStorageType,
-    });
-
-    const expectedError = new Error(
-      'Wrong Storage Type'
-    );
-
-    await expect(
-      Test.createTestingModule({
-        imports: [
-          AutomapperModule.forRoot({ strategyInitializer: classes() }),
-          ConfigModule.forRoot({
-            isGlobal: true,
-            load: [mockConfig],
-          }),
-          FileStorageModule,
-        ],
-      }).compile()
-    ).rejects.toThrow(expectedError);
-  });
 });

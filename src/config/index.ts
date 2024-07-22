@@ -1,1 +1,1 @@
-export * from "./storage.config"
+export * from './storage.config';
