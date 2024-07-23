@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
-import { FileStorageService } from '../../.';
+import { FileStorageService } from '../../file-storage.service';
 import { S3FileStorageConfig } from '.';
+import { FileDeleteResult, FileStoreResult } from '../../dto';
 
 @Injectable()
 export class S3FileStorageService extends FileStorageService<
-  S3.ManagedUpload.SendData,
-  S3.DeleteObjectOutput
+  FileStoreResult,
+  FileDeleteResult
 > {
   constructor(
     @Inject('S3FileStorageConfig')
@@ -20,8 +21,8 @@ export class S3FileStorageService extends FileStorageService<
     file: Buffer,
     path: string,
     config?: any,
-  ): Promise<S3.ManagedUpload.SendData> {
-    const uploadResult = this.s3
+  ): Promise<FileStoreResult> {
+    const uploadResult = await this.s3
       .upload({
         Bucket: this.s3FileStorageConfig.bucket,
         Body: file,
@@ -30,17 +31,21 @@ export class S3FileStorageService extends FileStorageService<
       })
       .promise();
 
-    return uploadResult;
+    return {
+      response: uploadResult,
+      fileName: uploadResult.Key,
+      path: uploadResult.Location,
+    } as FileStoreResult;
   }
 
-  async delete(path: string): Promise<S3.DeleteObjectOutput> {
-    const deletedFile = await this.s3
+  async delete(path: string): Promise<FileDeleteResult> {
+    const deletedFile = this.s3
       .deleteObject({
         Bucket: this.s3FileStorageConfig.bucket,
         Key: path,
       })
       .promise();
 
-    return deletedFile;
+    return { response: deletedFile } as FileDeleteResult;
   }
 }

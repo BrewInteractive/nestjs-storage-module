@@ -91,9 +91,9 @@ describe('S3FileStorageService', () => {
     it('should handle errors during deletion', async () => {
       const filePath = 'test-file.txt';
 
-      mockS3DeleteObject.mockReturnValueOnce({
-        promise: jest.fn().mockRejectedValue(new Error('Deletion failed')),
-      });
+      jest
+        .spyOn(s3FileStorageService, 'delete')
+        .mockRejectedValueOnce(new Error('Deletion failed'));
 
       await expect(s3FileStorageService.delete(filePath)).rejects.toThrow(
         'Deletion failed',
