@@ -4,7 +4,10 @@ import { FileStorageService } from '../../.';
 import { S3FileStorageConfig } from '.';
 
 @Injectable()
-export class S3FileStorageService extends FileStorageService {
+export class S3FileStorageService extends FileStorageService<
+  S3.ManagedUpload.SendData,
+  S3.DeleteObjectOutput
+> {
   constructor(
     @Inject('S3FileStorageConfig')
     private readonly s3FileStorageConfig: S3FileStorageConfig,
@@ -13,19 +16,24 @@ export class S3FileStorageService extends FileStorageService {
   ) {
     super();
   }
-
-  async store(file: Buffer, path: string, config?: any) {
-    const uploadResult = this.s3.upload({
-      Bucket: this.s3FileStorageConfig.bucket,
-      Body: file,
-      Key: `${path}`,
-      ...config,
-    });
+  async store(
+    file: Buffer,
+    path: string,
+    config?: any,
+  ): Promise<S3.ManagedUpload.SendData> {
+    const uploadResult = this.s3
+      .upload({
+        Bucket: this.s3FileStorageConfig.bucket,
+        Body: file,
+        Key: `${path}`,
+        ...config,
+      })
+      .promise();
 
     return uploadResult;
   }
 
-  async delete(path: string) {
+  async delete(path: string): Promise<S3.DeleteObjectOutput> {
     const deletedFile = await this.s3
       .deleteObject({
         Bucket: this.s3FileStorageConfig.bucket,

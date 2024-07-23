@@ -31,7 +31,7 @@ describe('S3FileStorageService', () => {
         },
         {
           provide: 'S3',
-          useValue: mockS3Client as any, // Use 'as any' to avoid type check error
+          useValue: mockS3Client as any,
         },
       ],
     }).compile();

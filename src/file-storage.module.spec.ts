@@ -5,6 +5,7 @@ import { FileStorageType } from './enum/file-storage-type.enum';
 import { Test } from '@nestjs/testing';
 import { classes } from '@automapper/classes';
 import { storageConfig } from './config';
+import { error } from 'console';
 
 describe('FileStorageModule', () => {
   let fileStorageModule: FileStorageModule;
@@ -52,5 +53,28 @@ describe('FileStorageModule', () => {
 
     fileStorageModule = app.get<FileStorageModule>(FileStorageModule);
     expect(fileStorageModule).toBeDefined();
+  });
+
+  it('Should throw error with invalid storage service', async () => {
+    process.env.STORAGE_SERVICE = 'invalid-type';
+    process.env.S3_SERVICE_ACCESS_KEY = 'test-access-key';
+    process.env.S3_SERVICE_SECRET_KEY = 'test-secret-key';
+    process.env.S3_SERVICE_REGION = 'test-region';
+    process.env.S3_SERVICE_AWS_BUCKET = 'test-bucket';
+
+    const expectedError = new Error('Wrong Storage Type');
+
+    await expect(
+      Test.createTestingModule({
+        imports: [
+          ConfigModule.forRoot({
+            isGlobal: true,
+            load: [storageConfig],
+          }),
+          FileStorageModule,
+        ],
+      }).compile(),
+    ).rejects.toThrow(expectedError);
+
   });
 });
