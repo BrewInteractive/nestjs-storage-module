@@ -5,7 +5,6 @@ import { FileStorageType } from './enum/file-storage-type.enum';
 import { Test } from '@nestjs/testing';
 import { classes } from '@automapper/classes';
 import { storageConfig } from './config';
-import { error } from 'console';
 
 describe('FileStorageModule', () => {
   let fileStorageModule: FileStorageModule;
@@ -75,6 +74,5 @@ describe('FileStorageModule', () => {
         ],
       }).compile(),
     ).rejects.toThrow(expectedError);
-
   });
 });
