@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { FileStorageType } from './enum/file-storage-type.enum';
+import { Module } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { S3FileStorageService } from './providers/aws/s3-file-storage.service';
-import { FileStorageType } from './enum/file-storage-type.enum';
 import { storageConfig } from './config';
 
 @Module({
