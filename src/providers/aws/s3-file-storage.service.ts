@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
-import { FileStorageService } from '../../file-storage.service';
-import { S3FileStorageConfig } from './s3-file-storage.config';
+import { FileStorageService } from '../../.';
+import { S3FileStorageConfig } from '.';
 
 @Injectable()
 export class S3FileStorageService extends FileStorageService {
