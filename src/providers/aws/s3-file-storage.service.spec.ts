@@ -100,4 +100,33 @@ describe('S3FileStorageService', () => {
       );
     });
   });
+
+  describe('store method', () => {
+    it('should upload file to S3', async () => {
+      const base64String = 'iVBORw0KGgoAAAANSUhEUgAA';
+      const fileBuffer = Buffer.from(base64String, 'base64');
+      const filePath = 'test-file.txt';
+
+      await s3FileStorageService.storeBase64(base64String, filePath);
+
+      expect(mockS3Upload).toHaveBeenCalledWith({
+        Bucket: mockS3FileStorageConfig.bucket,
+        Body: fileBuffer,
+        Key: filePath,
+      });
+    });
+
+    it('should handle errors during upload', async () => {
+      const base64String = 'iVBORw0KGgoAAAANSUhEUgAA';
+      const filePath = 'test-file.txt';
+
+      jest
+        .spyOn(s3FileStorageService, 'store')
+        .mockRejectedValueOnce(new Error('Upload failed'));
+
+      await expect(
+        s3FileStorageService.storeBase64(base64String, filePath),
+      ).rejects.toThrow('Upload failed');
+    });
+  });
 });

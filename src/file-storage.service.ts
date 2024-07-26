@@ -7,5 +7,12 @@ export abstract class FileStorageService<FileStoreResult, FileDeleteResult> {
     path: string,
     config?: any,
   ): Promise<FileStoreResult>;
+
+  abstract storeBase64(
+    base64: string,
+    path: string,
+    config?: any,
+  ): Promise<FileStoreResult>;
+
   abstract delete(path: string): Promise<FileDeleteResult>;
 }

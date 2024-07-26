@@ -38,7 +38,6 @@ import { storageConfig } from './config';
         configService: ConfigService,
       ) => {
         const fileStorageType = configService.get('storageService');
-        console.log(fileStorageType);
         switch (fileStorageType) {
           case FileStorageType.S3:
             return s3FileStorageService;

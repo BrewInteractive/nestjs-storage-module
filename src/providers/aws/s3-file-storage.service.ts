@@ -38,6 +38,10 @@ export class S3FileStorageService extends FileStorageService<
     } as FileStoreResult;
   }
 
+  async storeBase64(base64: string, path: string, config?: any) {
+    return await this.store(Buffer.from(base64, 'base64'), path, config);
+  }
+
   async delete(path: string): Promise<FileDeleteResult> {
     const deletedFile = this.s3
       .deleteObject({
