@@ -1,9 +1,7 @@
-import { AutomapperModule } from '@automapper/nestjs';
 import { ConfigModule } from '@nestjs/config';
 import { FileStorageModule } from './file-storage.module';
 import { FileStorageType } from './enum/file-storage-type.enum';
 import { Test } from '@nestjs/testing';
-import { classes } from '@automapper/classes';
 import { storageConfig } from './config';
 
 describe('FileStorageModule', () => {
@@ -20,7 +18,6 @@ describe('FileStorageModule', () => {
 
     const app = await Test.createTestingModule({
       imports: [
-        AutomapperModule.forRoot({ strategyInitializer: classes() }),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [mockS3Config],
