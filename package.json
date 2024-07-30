@@ -78,9 +78,20 @@
     "testEnvironment": "node"
   },
   "release-it": {
-    "$schema": "https://unpkg.com/release-it/schema/release-it.json",
-    "github": {
-      "release": true
+    "git": {
+      "requireBranch": "main",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits"
+        },
+        "infile": "CHANGELOG.md"
+      }
     }
   }
 }
