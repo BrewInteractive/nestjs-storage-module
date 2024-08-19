@@ -1,5 +1,12 @@
 
 
+## [0.1.1](https://github.com/BrewInteractive/nestjs-storage-module/compare/v0.1.0...v0.1.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* add service to index.ts. ([f5dbdd9](https://github.com/BrewInteractive/nestjs-storage-module/commit/f5dbdd9cb4aa3646aed97f1a6d7ef8b389c22b88))
+
 ## 0.1.0 (2024-07-30)
 
 
