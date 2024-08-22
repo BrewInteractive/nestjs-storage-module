@@ -9,9 +9,9 @@ describe('FileStorageModule', () => {
 
   it('Should be defined with mock configuration', async () => {
     const mockS3Config = () => ({
-      aws: {
-        accessKeyId: 'mock-access-key',
-        secretAccessKey: 'mock-secret-key',
+      s3: {
+        accessKey: 'mock-access-key',
+        secretKey: 'mock-secret-key',
       },
       storageService: FileStorageType.S3,
     });
@@ -35,7 +35,7 @@ describe('FileStorageModule', () => {
     process.env.S3_SERVICE_ACCESS_KEY = 'test-access-key';
     process.env.S3_SERVICE_SECRET_KEY = 'test-secret-key';
     process.env.S3_SERVICE_REGION = 'test-region';
-    process.env.S3_SERVICE_AWS_BUCKET = 'test-bucket';
+    process.env.S3_SERVICE_BUCKET = 'test-bucket';
 
     const app = await Test.createTestingModule({
       imports: [
@@ -56,7 +56,7 @@ describe('FileStorageModule', () => {
     process.env.S3_SERVICE_ACCESS_KEY = 'test-access-key';
     process.env.S3_SERVICE_SECRET_KEY = 'test-secret-key';
     process.env.S3_SERVICE_REGION = 'test-region';
-    process.env.S3_SERVICE_AWS_BUCKET = 'test-bucket';
+    process.env.S3_SERVICE_BUCKET = 'test-bucket';
 
     const expectedError = new Error('Wrong Storage Type');
 
