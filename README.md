@@ -27,12 +27,11 @@ This package is developed to be used in NestJS projects. The purpose of the modu
 | Variable Name                 | Description                                                     | Required | Default          |
 | ----------------------------- | --------------------------------------------------------------- | -------- | ---------------- |
 | `STORAGE_SERVICE`             | The storage service provider to be used                         | Yes      | -                |
-| `S3_SERVICE_ACCESS_KEY`       | AWS S3 access key                                               | Yes      | -                |
-| `S3_SERVICE_SECRET_KEY`       | AWS S3 secret key                                               | No       | 
--
-| `S3_SERVICE_REGION`           | AWS S3 service region                                           | Yes      | -                |
-| `S3_SERVICE_AWS_BUCKET`       | AWS S3 bucket                                                   | Yes      | -                |
-
+| `S3_SERVICE_ACCESS_KEY`       | S3 access key                                                   | Yes      | -                |
+| `S3_SERVICE_SECRET_KEY`       | S3 secret key                                                   | Yes      | -                |
+| `S3_SERVICE_REGION`           | S3 service region                                               | Yes      | -                |
+| `S3_SERVICE_BUCKET`       | S3 bucket                                                       | Yes      | -                |
+| `S3_SERVICE_ENDPOINT`         | S3 endpoint                                                     | Yes      | -                |
 
 ## Conclusion
 

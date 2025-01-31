@@ -39,7 +39,8 @@ export class S3FileStorageService extends FileStorageService<
     return {
       response: uploadResult,
       fileName: uploadResult.Key,
-      path: pathWithoutBucket,
+      path: `${pathWithoutBucket}/${uploadResult.Key}`,
+      url: uploadResult.Location,
     } as FileStoreResult;
   }
 

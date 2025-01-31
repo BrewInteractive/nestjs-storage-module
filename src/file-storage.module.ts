@@ -3,7 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FileStorageType } from './enum/file-storage-type.enum';
 import { Module } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
-import { S3FileStorageService } from './providers/aws/s3-file-storage.service';
+import { S3FileStorageConfig } from './providers/s3';
+import { S3FileStorageService } from './providers/s3/s3-file-storage.service';
 import { storageConfig } from './config';
 
 @Module({
@@ -16,15 +17,19 @@ import { storageConfig } from './config';
   providers: [
     {
       provide: 'S3FileStorageConfig',
-      useFactory: (configService: ConfigService) => configService.get('aws'),
+      useFactory: (configService: ConfigService) => configService.get('s3'),
       inject: [ConfigService],
     },
     S3FileStorageService,
     {
       provide: 'S3',
       useFactory: (configService: ConfigService) => {
-        const s3Config = configService.get('aws');
+        const s3Config = configService.get('s3') as S3FileStorageConfig;
         return new S3({
+          s3ForcePathStyle: true,
+          sslEnabled: false,
+          endpoint: s3Config.endpoint,
+          region: s3Config.region,
           accessKeyId: s3Config.accessKey,
           secretAccessKey: s3Config.secretKey,
         });
