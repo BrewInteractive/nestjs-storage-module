@@ -6,6 +6,9 @@ export abstract class FileStorageService<FileStoreResult, FileDeleteResult> {
     file: Buffer,
     path: string,
     config?: any,
+    options?: {
+      pathWithoutBucket?: boolean;
+    },
   ): Promise<FileStoreResult>;
 
   abstract storeBase64(
