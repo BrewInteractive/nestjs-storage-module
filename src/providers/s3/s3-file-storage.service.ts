@@ -33,13 +33,13 @@ export class S3FileStorageService extends FileStorageService<
         ...config,
       })
       .promise();
-    const pathWithoutBucket = options?.pathWithoutBucket
-      ? uploadResult.Location.replace(`${this.s3FileStorageConfig.bucket}/`, '')
-      : uploadResult.Location;
+    
     return {
       response: uploadResult,
       fileName: uploadResult.Key,
-      path: `${pathWithoutBucket}/${uploadResult.Key}`,
+      path: options?.pathWithoutBucket 
+        ? uploadResult.Key 
+        : `${this.s3FileStorageConfig.bucket}/${uploadResult.Key}`,
       url: uploadResult.Location,
     } as FileStoreResult;
   }
