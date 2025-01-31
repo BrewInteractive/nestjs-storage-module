@@ -1,5 +1,12 @@
 
 
+## [0.4.0](https://github.com/BrewInteractive/nestjs-storage-module/compare/v0.3.0...v0.4.0) (2025-01-31)
+
+
+### Features
+
+* add optional path configuration for file storage service ([07c4e83](https://github.com/BrewInteractive/nestjs-storage-module/commit/07c4e8346d57581a8053d5b76cdcf7ac7d57ebfc))
+
 ## [0.3.0](https://github.com/BrewInteractive/nestjs-storage-module/compare/v0.2.0...v0.3.0) (2025-01-31)
 
 
