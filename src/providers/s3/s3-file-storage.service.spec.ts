@@ -74,6 +74,57 @@ describe('S3FileStorageService', () => {
         s3FileStorageService.store(fileBuffer, filePath),
       ).rejects.toThrow('Upload failed');
     });
+
+    it('should return path with bucket when pathWithoutBucket option is false', async () => {
+      const fileBuffer = Buffer.from('mock-file-content');
+      const filePath = 'test-file.txt';
+      const mockLocation = 'mock-location';
+
+      mockS3Upload.mockReturnValue({
+        promise: jest.fn().mockResolvedValue({ 
+          Location: mockLocation,
+          Key: filePath 
+        }),
+      });
+
+      const result = await s3FileStorageService.store(fileBuffer, filePath, {}, { pathWithoutBucket: false });
+
+      expect(result.path).toBe(`${mockS3FileStorageConfig.bucket}/${filePath}`);
+    });
+
+    it('should return path without bucket when pathWithoutBucket option is true', async () => {
+      const fileBuffer = Buffer.from('mock-file-content');
+      const filePath = 'test-file.txt';
+      const mockLocation = 'mock-location';
+
+      mockS3Upload.mockReturnValue({
+        promise: jest.fn().mockResolvedValue({ 
+          Location: mockLocation,
+          Key: filePath 
+        }),
+      });
+
+      const result = await s3FileStorageService.store(fileBuffer, filePath, {}, { pathWithoutBucket: true });
+
+      expect(result.path).toBe(filePath);
+    });
+
+    it('should return path with bucket when no options provided', async () => {
+      const fileBuffer = Buffer.from('mock-file-content');
+      const filePath = 'test-file.txt';
+      const mockLocation = 'mock-location';
+
+      mockS3Upload.mockReturnValue({
+        promise: jest.fn().mockResolvedValue({ 
+          Location: mockLocation,
+          Key: filePath 
+        }),
+      });
+
+      const result = await s3FileStorageService.store(fileBuffer, filePath);
+
+      expect(result.path).toBe(`${mockS3FileStorageConfig.bucket}/${filePath}`);
+    });
   });
 
   describe('delete method', () => {
