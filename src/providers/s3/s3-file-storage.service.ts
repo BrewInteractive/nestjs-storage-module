@@ -21,6 +21,9 @@ export class S3FileStorageService extends FileStorageService<
     file: Buffer,
     path: string,
     config?: any,
+    options?: {
+      pathWithoutBucket?: boolean;
+    },
   ): Promise<FileStoreResult> {
     const uploadResult = await this.s3
       .upload({
@@ -30,11 +33,13 @@ export class S3FileStorageService extends FileStorageService<
         ...config,
       })
       .promise();
-
+    
     return {
       response: uploadResult,
       fileName: uploadResult.Key,
-      path: `${this.s3FileStorageConfig.bucket}/${uploadResult.Key}`,
+      path: options?.pathWithoutBucket 
+        ? uploadResult.Key 
+        : `${this.s3FileStorageConfig.bucket}/${uploadResult.Key}`,
       url: uploadResult.Location,
     } as FileStoreResult;
   }
