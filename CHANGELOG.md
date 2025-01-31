@@ -1,5 +1,18 @@
 
 
+## [0.3.0](https://github.com/BrewInteractive/nestjs-storage-module/compare/v0.2.0...v0.3.0) (2025-01-31)
+
+
+### Features
+
+* add optional path extraction configuration for S3 file storage ([eeea524](https://github.com/BrewInteractive/nestjs-storage-module/commit/eeea5248a5e10057f33d4aa06343e0adf1f14953))
+
+
+### Bug Fixes
+
+* simplify S3 file storage path generation logic ([0118a9c](https://github.com/BrewInteractive/nestjs-storage-module/commit/0118a9ceb93b772d15836b3425caf29a0c97e67d))
+* update S3 file storage path extraction ([8e7a653](https://github.com/BrewInteractive/nestjs-storage-module/commit/8e7a6535866dcda770a18092612474237ebb8c6f))
+
 ## [0.2.0](https://github.com/BrewInteractive/nestjs-storage-module/compare/v0.1.2...v0.2.0) (2025-01-24)
 
 
